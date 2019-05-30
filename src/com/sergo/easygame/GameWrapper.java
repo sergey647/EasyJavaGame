@@ -2,6 +2,8 @@ package com.sergo.easygame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -26,10 +28,21 @@ public class GameWrapper extends JFrame {
             Clouds[i]= new CloudClass(80+i*100,20+(((int)(Math.random()*3))*50),1,0,i%5);
             GWcont.add(Clouds[i]);
         }
+        Player MainPlayer = new Player(20,270);
+        GW.addKeyListener(new KeyListener(){
+            public void keyPressed(KeyEvent e){
+                System.out.println("Pressed");// write your code here
+                MainPlayer.dy = MainPlayer.dy==0 ? 15 : MainPlayer.dy;
+            }
+            public void keyReleased(KeyEvent e){}
+            public void keyTyped(KeyEvent e){}
+        });
+        GWcont.add(MainPlayer);
         GW.setVisible(true);
         while (true){
-            System.out.println(Clouds[0].getBounds());
-            for(int i=0; i<Clouds.length;i++) Clouds[i].updateObjCondition();
+            for(int i=0; i<Clouds.length;i++)
+                Clouds[i].updateObjCondition();
+            MainPlayer.updateObjCondition();
             try {
                 Thread.sleep(100);
             }catch (java.lang.InterruptedException e){System.out.println("Not a pause?");}
