@@ -8,8 +8,8 @@ import java.io.IOException;
 
 
 // Изображение облака имеет размер 84х43 пикселя
-public class CloudClass extends AbstractGameObject{
-    public CloudClass(int x,int y,int dx,int dy,int id) {
-        super("Cloud",x,y,84,43,dx,dy,id,false);
+public class NatureClass extends AbstractGameObject{
+    public NatureClass(String type, int x,int y,int w, int h,int dx,int dy,int id) {
+        super(type,x,y,w,h,dx,dy,id,false);
     }
 }

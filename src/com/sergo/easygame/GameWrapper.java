@@ -9,6 +9,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class GameWrapper extends JFrame {
+    final int GameSpeed=3;
     public GameWrapper(){
         super("Sergo's first Java Game" );
         setBounds(100,100,640,480);
@@ -23,12 +24,18 @@ public class GameWrapper extends JFrame {
         GameWrapper GW = new GameWrapper();
         Container GWcont=GW.getContentPane();
         GWcont.setLayout(null);
-        CloudClass[] Clouds = new CloudClass[8];
+        Player MainPlayer = new Player(20,GW.getHeight()/2);
+        GWcont.add(MainPlayer);
+        NatureClass[] Road = new NatureClass[2];
+        for(int i=0; i<Road.length;i++) {
+            Road[i]= new NatureClass("Road",(GW.getWidth()-10)*i,GW.getHeight()/2,639,132,1*GW.GameSpeed,0,0);
+            GWcont.add(Road[i]);
+        }
+        NatureClass[] Clouds = new NatureClass[8];
         for(int i=0; i<Clouds.length;i++) {
-            Clouds[i]= new CloudClass(80+i*100,20+(((int)(Math.random()*3))*50),1,0,i%5);
+            Clouds[i]= new NatureClass("Cloud",80+i*100,20+(((int)(Math.random()*3))*50),84,43,1*GW.GameSpeed,0,i%5);
             GWcont.add(Clouds[i]);
         }
-        Player MainPlayer = new Player(20,270);
         GW.addKeyListener(new KeyListener(){
             public void keyPressed(KeyEvent e){
                 System.out.println("Pressed");// write your code here
@@ -37,11 +44,12 @@ public class GameWrapper extends JFrame {
             public void keyReleased(KeyEvent e){}
             public void keyTyped(KeyEvent e){}
         });
-        GWcont.add(MainPlayer);
         GW.setVisible(true);
         while (true){
             for(int i=0; i<Clouds.length;i++)
                 Clouds[i].updateObjCondition();
+            for(int i=0;i<Road.length;i++)
+                Road[i].updateObjCondition();
             MainPlayer.updateObjCondition();
             try {
                 Thread.sleep(100);
